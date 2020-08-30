@@ -1,4 +1,5 @@
-Digital signal analysis library for python.
+
+Digital Signal Analysis (DSA) library for python.
 The library includes such methods of signal analysis and
 signal parameter estimation as arma-based techniques; 
 subspace-based techniques; matrix-pencil-based methods; 
