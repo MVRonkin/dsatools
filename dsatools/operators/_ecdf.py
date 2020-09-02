@@ -18,8 +18,8 @@ def ecdf(x,y=None):
 
     Returns
     --------
-    * if y is not None ->  (out_x, out_y,bins); 
-    * if y is None     ->  (out_x,bins). 
+    * if y is not None ->  (bins,out_x, out_y); 
+    * if y is None     ->  (bins,out_x). 
 
     Notes
     -------

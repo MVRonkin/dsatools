@@ -11,6 +11,8 @@ from ._probe import probe, probe_filter
 
 from ._findpeaks import findpeaks
 
+from ..operators import *
+
 from ._math_auxilary import(cexp,
                             cexp2pi,
                             polyval,
