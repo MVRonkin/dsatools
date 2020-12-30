@@ -7,4 +7,6 @@ from ._base._frequency import(fitz_r,
                               tretter_f,
                               ml_fft, 
                               barycenter_fft,
-                              barycenter_general_gauss_fft)
+                              barycenter_general_gauss_fft,
+                              maxcorfreq,
+                              maxcorfreq_real)

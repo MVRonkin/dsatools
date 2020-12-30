@@ -13,8 +13,8 @@ def emd(x, order,method = 'cubic', max_itter = 100, tol = 0.1):
        intrinsic mode functions (IMF), based on the idea, 
        that each component can be reconstructed by it envelope.
     
-    Parameters:
-    ----------------------------
+    Parameters
+    ----------------
     * x: 1d ndarray.
     * order: int,
         number of IMFs (with out remainder).
@@ -26,14 +26,14 @@ def emd(x, order,method = 'cubic', max_itter = 100, tol = 0.1):
     * tol: float,
         tolerance to variance of changing imf in itterations.
     
-    Returns:
-    ---------------------------
+    Returns
+    ---------------
     * imfs: 2d ndarray,
         intrinsic mode functions and remainder, 
         shape = (order+1,x.shape).
 
-    References:
-    --------------------------
+    References
+    -----------------
     [1] N. E. Huang et al., 
         "The empirical mode decomposition and the Hilbert 
        spectrum for nonlinear and non-stationary time series analysis", 
@@ -57,6 +57,7 @@ def emd(x, order,method = 'cubic', max_itter = 100, tol = 0.1):
     vmd
     hvd
     ewt
+    hht (operators)
     
     '''
     

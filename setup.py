@@ -7,8 +7,8 @@ with open('README.md') as f:
 setup(
     name="dsatools",
     packages=find_packages(),
-    version="0.1.3",
-    description=""" The library with a most popular Digital Signal Analysis (DSA) tools """,
+    version="0.1.32",
+    description=""" The library with a most popular tools for Digital Signal Analysis (DSA)  """,
     long_description=readme,
     author="Mikhail Ronkin",
 	author_email="mvRonkin@gmail.com",
@@ -21,9 +21,17 @@ setup(
 			'Digital Spectrum Analysis'],
 			
     license="MIT",
+	
+	classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+		"Programming Language :: Python :: 3.7",
+    ],
+	
     install_requires=[
           'numpy',
           'scipy',
-		  'matplotlib'
+	  'matplotlib'
       ],
 )

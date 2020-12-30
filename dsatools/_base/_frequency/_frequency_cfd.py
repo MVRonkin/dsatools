@@ -3,15 +3,155 @@ import scipy
 
 from ... import operators
 
-__all__ = ['FitzR','Tretter_f','Kay','MCRB','MandM','Fitz','FandK']
+__all__ = ['FitzR','Tretter_f','Kay','MCRB','MandM','Fitz','FandK','maxcorfreq_real']
 #--------------------------------------------------------------
 def _check_input(s,fs=None):
     s = np.array(s)
     N = s.shape[0]
     
+    if s.dtype not in \
+        [complex,np.complex,np.complex64,
+		np.complex128,np.complex_]:
+        s = scipy.signal.hilbert(s)
+        
     if(fs is None):
         fs = N
+        
     return s,N,fs
+#--------------------------------------------------------------
+def maxcorfreq_real(s,fs=None,with_xcorr=True): 
+    '''
+    Fast signal frequency estimater for real-valued
+      single-tone short sample-size signals on the 
+      background of white gaussian noises with high 
+      signal-to-noise ratio (SNR).
+
+    Parameters
+    -----------
+    * s: 1d ndarray (float),
+        is the input signal.
+    * fs: float or int,
+        is the sampling frequency.
+
+    Returns
+    --------------------
+    * f: float,
+        estimated frequency.
+
+    Notes
+    -----------
+    * Than higher sample size (number of zero-crossing),
+        than lower SNR is required.
+    * Algorithm is based on properties of correlation
+        coefficient.
+    * For estimate frequrncy in
+        points multupy result on 2*pi
+
+    Example
+    -------------
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import dsatools
+    import dsatools.utilits as ut
+    
+    delay=5
+    f0=1
+    delta_f=0.5
+    fs = 10
+    SNR = 50
+    signal =\
+        dsatools.generator.beatsignal(delay=delay,
+                                      f0=f0,
+                                      delta_f=delta_f,
+                                      fs=fs,
+                                      snr_db=SNR).real
+    ut.probe(signal)
+    Tm = len(signal)/fs
+    f_exp = delay*delta_f/Tm
+    print(maxcorfreq_real(signal, fs=fs),f_exp)
+    '''
+    
+    s = np.array(s)
+    if fs is None:
+        fs = s.size
+    
+    if with_xcorr:        
+        s  = operators.correlation(s,mode='full').real
+        
+    s1 = s[1:]
+    s2 = s[:-1]
+
+    corcof = np.sum(s1*s2)/np.sum(np.square(s))
+    angle = np.arccos(corcof) 
+    return fs*angle/(2*np.pi)
+
+#--------------------------------------------------------------
+def maxcorfreq(s,fs=None, with_xcorr=True): 
+    '''
+    Fast signal frequency estimater for complex-valued
+      single-tone short sample-size signals on the 
+      background of white gaussian noises with high 
+      signal-to-noise ratio (SNR).
+
+    Parameters
+    -----------
+    * s: 1d ndarray (float),
+        is the input signal.
+    * fs: float or int,
+        is the sampling frequency.
+    * with_xcorr: bool,
+        if true frequency of correlation function
+        will be estimated.
+        
+    Returns
+    --------------------
+    * f: float,
+        estimated frequency.
+
+    Notes
+    -----------
+    * Than higher sample size (number of zero-crossing),
+        than lower SNR is required.
+    * Algorithm is based on properties of correlation
+        coefficient.
+    * For estimate frequrncy in
+        points multupy result on 2*pi.
+        
+    Example
+    -------------
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import dsatools
+    import dsatools.utilits as ut
+    
+    delay=5
+    f0=1
+    delta_f=0.5
+    fs = 10
+    SNR = 50
+    signal =\
+        dsatools.generator.beatsignal(delay=delay,
+                                      f0=f0,
+                                      delta_f=delta_f,
+                                      fs=fs,
+                                      snr_db=SNR)
+    ut.probe(signal)
+    Tm = len(signal)/fs
+    f_exp = delay*delta_f/Tm
+    print(maxcorfreq(signal, fs=fs),f_exp)
+    '''
+    s,N,fs = _check_input(s,fs)
+    
+    if with_xcorr:        
+        s  = operators.correlation(s,mode='full')
+        
+    s1 = s[1:]
+    s2 = s[:-1]
+    
+    corcof = np.sum(s1*np.conj(s2))#/np.sum(np.square(s))
+    angle = np.angle(corcof) 
+    return fs*angle/(2*np.pi) 
+ 
 
 #--------------------------------------------------------------  
 def fitz_r(s,fs = None, w_on = True):
@@ -549,7 +689,7 @@ def cfd_est(s,fs=None,mode='FitzR'):
          fest = FitzR_est(s,fs)
          print ('It is wrong type of estimation')       
     return    fest
-
+#-------------------------------------------------------------- 
 def _cfd_fulltest(s,fs,Nfft):
        fest    = np.zeros(7) 
        fest[0] = mlfft(s,fs,Nfft) 

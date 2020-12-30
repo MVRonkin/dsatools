@@ -111,7 +111,9 @@ from ._frequency import(fitz_r,
                         tretter_f,
                         ml_fft, 
                         barycenter_fft,
-                        barycenter_general_gauss_fft)
+                        barycenter_general_gauss_fft,
+                        maxcorfreq,
+                        maxcorfreq_real)
 
 from ._phase_init import (wls_phase, 
                           ls_phase, 

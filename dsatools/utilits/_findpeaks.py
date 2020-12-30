@@ -1,10 +1,5 @@
-import random
 import numpy as np
-import struct
-import os
-import numpy as np
-import matplotlib.pyplot as plt
-import scipy.signal as scip
+import scipy
 
 #-------------------------------------------------------------------
 def findpeaks(x,order=1, mode = 'maximum', min_distance = None, peak_threshold=0):
@@ -61,13 +56,15 @@ def findpeaks(x,order=1, mode = 'maximum', min_distance = None, peak_threshold=0
     positions = np.array([], dtype = np.int)
     
     x_extend = np.concatenate((np.zeros(order), x, np.zeros(order)))
+#     x_extend[x_extend<peak_threshold] = peak_threshold
+#     plt.plot(x_extend)
     
     p=order
     for _ in np.arange(N): #same as while(p<N+order)       
         prange = x_extend[p-order:p+order]        
         
         if( fn(x[p-order],prange) ):
-            if(np.abs(x[p-order]) >peak_threshold):
+            if((x[p-order]) >peak_threshold):
                 positions  = np.append(positions, p-order)
                 p += min_distance
         
@@ -77,4 +74,3 @@ def findpeaks(x,order=1, mode = 'maximum', min_distance = None, peak_threshold=0
     #TODO: check conditions at the start and at the end.
     
     return positions
-

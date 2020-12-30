@@ -14,3 +14,5 @@ from ._lags_matrix import lags_matrix, covariance_matrix
 from ._diagnalization import diaganal_average
 from ._tls_turnication import tls_turnication
 from ._elementary import diff,arg,afft
+from ._hilbert import hilbert, hilbert_autocorrelation
+from ._hht import hht
