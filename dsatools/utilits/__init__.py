@@ -13,6 +13,8 @@ from ._findpeaks import findpeaks
 
 from ..operators import *
 
+from ._barycenter import barycenter
+
 from ._math_auxilary import(cexp,
                             cexp2pi,
                             polyval,
