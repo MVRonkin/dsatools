@@ -205,7 +205,7 @@ def angle(x,y, normalize = False):
         out = np.angle(out)
     
     else:
-	out /= np.sqrt(np.abs(np.sum(np.square(x))*np.sum(np.square(y))))
+        out /= np.sqrt(np.abs(np.sum(np.square(x))*np.sum(np.square(y))))
         out = np.arccos(out)
     
     return out
