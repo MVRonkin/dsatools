@@ -72,7 +72,9 @@ def _log(x):
 def euclidian(x,y, square = False):
     '''
     Euclidian distance.
-    
+    ..math::
+       Distance = sum(|[x-y]^2|)^(1/2)
+
     Parameters
     ----------
     * x: 1d ndarray.
@@ -99,8 +101,10 @@ def euclidian(x,y, square = False):
 #----------------------------------------------------------------------------------------
 def minkowsky(x,y, p=2, root = False):
     '''
-    Euclidian distance.
-    
+    minkowskydistance.
+    ..math::
+      Distance = sum(|[x-y]^p|)^(1/p)
+
     Parameters
     ----------
     * x: 1d ndarray.
@@ -123,8 +127,8 @@ def minkowsky(x,y, p=2, root = False):
     '''
     x,y = _check_xy(x,y)
     
-    out = np.sum(np.abs(np.power(x - y, p)))
-    
+    #out = np.sum(np.abs(np.power(x - y, p)))
+    out = np.sum(np.power(np.abs(x-y),p))
     if root and p != 0:
         out = np.power(out, 1/p)
         
@@ -133,6 +137,8 @@ def minkowsky(x,y, p=2, root = False):
 def correlation(x,y, normalize = False):
     '''
     Correlation coefficients of two signals.
+    ..math::	
+	corcof = sum(xy^*)/(sum(x^2)sum(y^2))^0.5
     
     Parameters
     ----------
@@ -162,7 +168,10 @@ def correlation(x,y, normalize = False):
 def angle(x,y, normalize = False):
     '''
     Angle between of two signals.
-    
+    ..math::	
+	angle  = arctan2[Im{corcof},Re{corcof}] if x complex valued 
+    	angle  = arccos[corcof] if x real valued 
+
     Parameters
     ----------
     * x: 1d ndarray.
@@ -196,6 +205,7 @@ def angle(x,y, normalize = False):
         out = np.angle(out)
     
     else:
+	out /= np.sqrt(np.abs(np.sum(np.square(x))*np.sum(np.square(y))))
         out = np.arccos(out)
     
     return out
@@ -203,7 +213,9 @@ def angle(x,y, normalize = False):
 def entropy(x,y=None, symmetry_entropy = False, cross_information = False):
     '''
     Entropy of two signals H(x|y).
-    
+    ..math::
+       H(x|y) = sum(x*ln(|y|))
+
     Parameters
     ----------
     * x: 1d ndarray.
@@ -243,7 +255,9 @@ def entropy(x,y=None, symmetry_entropy = False, cross_information = False):
 def itakura_saito(x,y=None,p=2,spectra_domain=True):
     '''
     Itakura Saito distance of two signals.
-    
+    ..math::    
+     I(x|y) = x/y - log(|x|)/log(|y|)-1
+		
     Parameters
     ----------
     * x: 1d ndarray.
@@ -265,18 +279,18 @@ def itakura_saito(x,y=None,p=2,spectra_domain=True):
         I(x|y) = x/y - log(|x|)/log(|y|)-1
     
     '''       
-    x,y = _check_xy(x,y)
+#     x,y = _check_xy(x,y)
     
     if(spectra_domain):
         x = np.fft.fft(x)
         y = np.fft.fft(y)
     
-    out =x/y -_log(x)/_log(y)-1
+    out =x/(y + _EPS_ ) -_log(x)/(_log(y)+_EPS_ )-1
     
-    if p !=1:out = np.power(out,p)
+    if p !=1:out = np.power(np.abs(out),p)
     out = np.sum(out)
     
-    if p !=0: out = np.power(out,1/p)
+    if p !=0: out = np.power(np.abs(out),1/p)
     
     return np.abs(out)
 
@@ -285,6 +299,8 @@ def kl(x, y, a=None, generalize = False):
     ''' 
     Kullback-Leibner (KL) divergence of
     two signals kl(x|y).
+    ..math::       
+	dist = KL(x||a*y+(1-a)*x)+KL(y||a*x+(1-a)*x)
     
     Parameters
     ----------
@@ -335,7 +351,9 @@ def kl(x, y, a=None, generalize = False):
 def dice(x,y):
     ''' 
     Dice coefficient of two signals.
-    
+    ..math::
+    	 dice = 2KL(x||y)/(H(x|y)+H(y|x))
+
     Parameters
     ----------
     * x: 1d ndarray.
@@ -359,7 +377,9 @@ def dice(x,y):
 def jaccard(x,y):
     ''' 
     Jaccard coefficient of two signals.
-    
+    ..math::
+    	jaccard = 2KL(x||y)/max(H(x|y),H(y|x))
+
     Parameters
     ----------
     * x: 1d ndarray.
@@ -405,6 +425,10 @@ def selfentropy_reiny(x,a=1):
         if(a='max'): H(x_alpha) =log(max(x))
         if(a='min'): H(x_alpha) =log(min(x))
         
+    See Also
+    ----------------
+    * alpha_divergence
+    * entropy
     '''    
     x = np.asarray(x)
     
@@ -443,7 +467,7 @@ def alpha_divergence(x,y,a=1):
         if(a==0):   D = -log(sum(q*sign(p)));        
         if(a==0.5): D = -2log(sum(sqrt(p*q)));        
         if(a==1):   D = sum(p*log(p/q));
-
+	...
         if(a=='max'): D = log(max(p/q));        
         if(a=='min'): D = log(min(p/q));        
         if(a=='sum'): D = log(sum(p/q)).
@@ -459,7 +483,7 @@ def alpha_divergence(x,y,a=1):
         return _log( np.sum(y*np.sign(x)) )
     
     elif(a==0.5):
-        return -2*_log(np.sum(np.sqrt(x*y)))
+        return -2*_log(np.sum(np.sqrt(np.abs(x*y))))
                        
     
     elif(a==1):
