@@ -218,7 +218,7 @@ def ddtw(x,  y, weight = None):
     7. Sum all the stored minimum distances.
     
     '''
-    return dtw_distance(np.diff(x), np.diff(y))
+    return dtw(np.diff(x), np.diff(y))
 #---------------------------
 def msm(x, y, c = 0.01):
     ''' TEST '''
@@ -259,14 +259,17 @@ def lcss(x, y, delta= 3, epsilon = 0.05):
 
     lcss = np.zeros((N + 1, N + 1), dtype=np.int32)
 
-    for i in range(m):
+    for i in range(N):
         for j in range(i - int(delta), i + int(delta) + 1):
             
             if j < 0:  j = -1
             
-            elif j >= n: j = i + delta
+            elif j >= N: j = i + delta
             
-            elif y[j] + epsilon >= x[i] >= y[j] - epsilon:
+            elif (y[j].real + epsilon >= 
+                  x[i].real >= 
+                  y[j].real - epsilon):
+                
                 lcss[i + 1, j + 1] = lcss[i,j] + 1
             
             elif lcss[i,j + 1] > lcss[i + 1,j]:
@@ -281,7 +284,8 @@ def lcss(x, y, delta= 3, epsilon = 0.05):
         if lcss[N, i] > max_val:
             max_val = lcss[N, i]
 
-    return 1 - (max_val / m)    
+    return 1 - (max_val / N)   
+
 #---------------------------
 def erp(x, y,  band_size = 5, g = 0.5):
     ''' TEST '''
@@ -302,9 +306,9 @@ def erp(x, y,  band_size = 5, g = 0.5):
         for j in range(l, r + 1):
             if np.abs(i - j) <= int(band):
 
-                dist1  = (x[i] - g)**2
-                dist2  = (g - y[j])**2
-                dist12 = (x[i] - y[i])**2
+                dist1  = abs(x[i] - g)**2
+                dist2  = abs(g - y[j])**2
+                dist12 = abs(x[i] - y[i])**2
 
                 if i + j != 0:
                     if i == 0 or (j != 0 and 
@@ -360,26 +364,26 @@ def twe(ta, tb, penalty = 1, stiffness = 1):
         distj1 = 0
         for k in range(0, dim + 1):
             if j > 1:
-                distj1 += (tb[j - 2] - tb[j - 1])**2
+                distj1 += abs(tb[j - 2] - tb[j - 1])**2
             else:
-                distj1 += tb[j - 1]**2
+                distj1 += abs(tb[j - 1])**2
         Dj1[j] = distj1
 
     for i in range(1, r + 1):
         disti1 = 0
         for k in range(0, dim + 1):
             if i > 1:
-                disti1 += (ta[i - 2] - ta[i - 1])**2
+                disti1 += abs(ta[i - 2] - ta[i - 1])**2
             else:
-                disti1 += (ta[i - 1])**2
+                disti1 += abs(ta[i - 1])**2
         Di1[i] = disti1
 
         for j in range(1, c + 1):
             dist = 0
             for k in range(0, dim + 1):
-                dist += (ta[i - 1] - tb[j - 1])**2
+                dist += abs(ta[i - 1] - tb[j - 1])**2
                 if i > 1 and j > 1:
-                    dist += (ta[i - 2] - tb[j - 2])**2
+                    dist += abs(ta[i - 2] - tb[j - 2])**2
             D[i,j] = dist
 
     # border of the cost matrix initialization
@@ -392,9 +396,9 @@ def twe(ta, tb, penalty = 1, stiffness = 1):
     for i in range(1, r + 1):
         for j in range(1, c + 1):
             
-            htrans = np.abs(tsa[i - 1] - tsb[j - 1])
+            htrans = abs(tsa[i - 1] - tsb[j - 1])
             
-            if j > 1 and i > 1: htrans += np.abs(tsa[i - 2] - tsb[j - 2])
+            if j > 1 and i > 1: htrans += abs(tsa[i - 2] - tsb[j - 2])
             
             dist0 = D[i - 1,j - 1] + stiffness * htrans + D[i,j]
             dmin = dist0

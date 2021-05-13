@@ -261,8 +261,8 @@ def _euclid(X, Y, inner= False):
         axis = 0
         open_dot = False        
     
-    XX = np.sum(np.abs(np.square(X)),axis=axis)[:, np.newaxis]
-    YY = np.sum(np.abs(np.square(Y)),axis=axis)[np.newaxis, :]
+    XX = np.sum(np.square(X),axis=axis)[:, np.newaxis]
+    YY = np.sum(np.square(Y),axis=axis)[np.newaxis, :]
     
     distances = - 2 * _linear(X, Y,open_dot)
     
@@ -273,7 +273,7 @@ def _euclid(X, Y, inner= False):
 
     distances += YY
     
-    return distances 
+    return np.abs(distances)
 
 
 
