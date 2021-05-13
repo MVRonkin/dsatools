@@ -1,9 +1,4 @@
-import random
 import numpy as np
-import struct
-import os
-import numpy as np
-import matplotlib.pyplot as plt
 import scipy
 
 __all__ = ['lags_matrix','covariance_matrix', 'conv_matrix']
@@ -27,9 +22,12 @@ def lags_matrix(x, mode = 'full', lags=None):
             first N columns of full matrix, and dimention = [N,lags];
        > mode = 'postw': lags_matrix is the postwindowed matrix with 
             last N columns of full matrix, and dimention = [N,lags];
-       > mode = 'covar': lags_matrix is the trimmed full matrix with
+       > mode = 'covar' or 'valid': lags_matrix is the trimmed full matrix with
             cut first and last m coluns (out = full[lags:N-lags,:]), 
             with dimention = [N-lags+1,lags];
+       > mode = 'same': conv_matrix is the trimmed full matrix with
+            cut first and last m coluns (out = full[(lags-1)//2:N+(lags-1)//2,:]), 
+            with dimention = [N,lags];      
        > mode = 'traj': lags_matrix is trajectory 
            or so-called caterpillar matrix 
             with dimention = [N,lags];
@@ -79,7 +77,7 @@ def lags_matrix(x, mode = 'full', lags=None):
         matrix =  scipy.linalg.hankel(x)# more fast
 
     elif mode in ['full','prewindowed','postwindowed',
-                    'prew','postw','covar']:
+                    'prew','postw','covar','same','valid']:
         
         matrix = np.zeros((N+lags-1,lags),dtype=x.dtype)
         
@@ -93,14 +91,17 @@ def lags_matrix(x, mode = 'full', lags=None):
             matrix = matrix[:N,:]       
         elif mode == 'postwindowed' or mode =='postw': 
             matrix = matrix[lags-1:,:]       
-        elif mode == 'filed' or mode =='covar': 
+        elif mode == 'same':             
+            matrix = matrix[(lags-1)//2:(lags-1)//2+N,:]       
+        elif mode == 'valid' or mode =='covar': 
             matrix = matrix[lags-1:-lags+1,:] 
             
     else:
         raise ValueError(""" 
                          mode have to be one of 
                          ['full','prewindowed','postwindowed',
-                        'prew','postw','covar','traj', 'caterpillar', 
+                        'prew','postw','covar','valid','same',
+                        'traj', 'caterpillar', 
                         'trajectory', 'hankel', 'toeplitz'] """)
     
 #     # TODO: TRY IF NP.FLIP... FASTER ?
@@ -128,9 +129,13 @@ def covariance_matrix(x, mode = 'full', lags=None, ret_base=False):
             first N columns of full matrix, and dimention = [N,lags];
        > mode = 'postw': lags_matrix is the postwindowed matrix with 
             last N columns of full matrix, and dimention = [N,lags];
-       > mode = 'covar': lags_matrix is the trimmed full matrix with
+       > mode = 'covar' or 'valid': lags_matrix is the trimmed full matrix with
             cut first and last m coluns (out = full[lags:N-lags,:]), 
             with dimention = [N-lags+1,lags];
+       > mode = 'same': conv_matrix is the trimmed full matrix with
+            cut first and last m coluns 
+            (out = full[(lags-1)//2:N+(lags-1)//2,:]), 
+            with dimention = [N,lags]; 
        > mode = 'traj': lags_matrix is trajectory 
            or so-called caterpillar matrix 
             with dimention = [N,lags];

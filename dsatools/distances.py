@@ -17,4 +17,12 @@ from ._base._distances import(minkowsky,
                               wasserstein,                            
                               kolmogorov_smirnov,
                               minkowsky_cdf,
-                              chisquare_cdf)
+                              chisquare_cdf,
+                              hasudorf,
+                              hasudorf_test,
+                              dtw,
+                              ddtw,
+                              msm,
+                              erp,
+                              lcss,
+                              twe)

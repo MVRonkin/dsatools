@@ -2,15 +2,24 @@ import numpy as np
 import scipy
 
 from ._lags_matrix import lags_matrix
+
+
+
+from .. import utilits 
+
 #  ktype: {exp, rbf, polynomial, sigmoid, linear, euclid, minkowsky, thin_plate, bump, polymorph}.
     
 #     kpar: kernal parameter depends on the kernal type.
 #----------------------------------------------------
-__all__ = ['kernel_matrix']
+__all__ = ['kernel_matrix','euclidian_matrix']
 
 def kernel_matrix(x, mode = 'full', kernel='linear', 
                   kpar=1, lags = None, ret_base = False, normalization = True):
     '''
+    
+    Kernel matrix for input vector.
+    Like an analogue of covariance_matrix
+    
     Parameters
     -------------
     * x: input 1d ndarray.    
@@ -97,10 +106,32 @@ def kernel_matrix(x, mode = 'full', kernel='linear',
     return out
 
 #------------------------------------------------------------
-def euclidian_matrix(X,Y, inner=False, square=True):
+def euclidian_matrix(X,Y, inner=False, square=True, normalize=False):
+    '''
+    Matrix of euclidian distance.
+        I.E. Pairwise distance matrix.
+    
+    Parameters:
+    ------------------
+    * X,Y: 2d or 1d input ndarrays.
+    * inner: bool,
+        inner or outer dimesions.
+    * square: bool,
+        if false, than sqrt will be taken.
+    * normalize: bool,
+        if true, distance will be 
+        normalized as d = d/(std(x)*std(y))    
+        
+    Returns
+    ----------
+    * out: 2d ndarray,
+        pairwise distance matrix.    
+    '''
     X,Y = _check_dim(X,Y)
     out = _euclid(X, Y, inner=inner)
     if not square: out = np.sqrt(out)
+    if normalize: out /=np.std(X)*np.std(Y)   
+        
     return out
 
 #------------------------------------------------------------
@@ -116,11 +147,7 @@ def _kernel(a,b=None,ktype='rbf',kpar=1/2, take_mean = False):
             euclid, minkowsky, thin_plate, bump, polymorph}.
     * kpar: float,
         kernal parameter depends on the kernal type.
-    
-    Returns
-    ----------
-    * out: 1d or 1d ndarray,
-        kernel matrix (or vector).
+
     '''
     a,b = _check_dim(a,b)
 

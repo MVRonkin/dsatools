@@ -23,4 +23,11 @@ from ._distances  import (minkowsky,
 #                           ab_divergence
                          )
 
-
+from ._distances_matrix import (hasudorf,
+                                hasudorf_test,
+                                dtw,
+                                ddtw,
+                                msm,
+                                erp,
+                                lcss,
+                                twe)
