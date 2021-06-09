@@ -1,13 +1,13 @@
 import numpy as np
 import scipy
-_all__ = ['afft','cexp','cexp2pi','arg','polyval','gamma']
+_all__ = ['afft','cexp','cexp2pi','arg','polyval','gamma','corcof']
 
 #-------------------------------------------------------------------
-#----------------------------
 def afft(x, n_fft=None):
     '''
-    
     Amplitude spectrum.
+    ..math::
+    afft = abs(fft(x))
     
     Parameters
     -----------
@@ -44,6 +44,32 @@ def arg(x):
     x = np.asarray(x)
 
     return np.unwrap(np.angle(x))
+#-------------------------------------------------------------------
+def corcof(a,b): 
+    '''
+    Correlation coefficient:
+    ..math::
+    corcof = sum(a*b^*)/sqrt(sum(a^2)sum(b^2))
+    
+     Parameters
+    -----------
+    * a,b: 1d ndarray (complex).
+    
+    Returns
+    --------
+    * corcof: float (complex).
+    '''
+    a = np.asarray(a)
+    b = np.asarray(b)
+    
+    if a.shape!=b.shape:
+        raise valueError('x.shape!=y.shape')
+    if x.ndim >1:
+        raise valueError('x.ndim >1')
+        
+    a = a - np.mean(a)
+    b = b - np.mean(b)
+    return np.sum(a*np.conj(b))/np.sqrt(np.sum(np.square(a))*np.sum(np.square(b)))
 
 #-------------------------------------------------------------------
 cexp = lambda x: (np.exp(1j*x))
@@ -106,7 +132,7 @@ def dif(y,delta=1):
 #--------------------------------------------------------------------  
 def join_subsets(x, y):
     ''' 
-    Join subsets. 
+    Join subsets (uinon of subsets). 
     
     Parameters:
     ------------
@@ -133,7 +159,7 @@ def join_subsets(x, y):
 #--------------------------------------------------------------------  
 def cross_subsets(x, y):
     ''' 
-    Cross subsets. 
+    Cross subsets (intersection). 
     
     Parameters:
     ------------

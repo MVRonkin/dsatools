@@ -1,4 +1,4 @@
-from ._awgn import awgn, awgnDB
+from ._awgn import awgn, awgnDB, signal_like_noise
 
 from ._types import(fixpoint,
                     is_1d,
@@ -20,5 +20,6 @@ from ._math_auxilary import(cexp,
                             polyval,
                             gamma, 
                             join_subsets, 
-                            cross_subsets)
+                            cross_subsets,
+                            corcof)
 

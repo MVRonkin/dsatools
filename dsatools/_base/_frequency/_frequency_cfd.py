@@ -1,5 +1,5 @@
 import numpy as np
-import scipy
+import scipy.signal
 
 from ... import operators
 
