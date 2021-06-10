@@ -1,4 +1,4 @@
-from ._awgn import awgn, awgnDB, signal_like_noise
+from ._awgn import awgn, awgnDB, wgn, wgn_with_snr, signal_like_noise
 
 from ._types import(fixpoint,
                     is_1d,

@@ -7,7 +7,7 @@ with open('README.md') as f:
 setup(
     name="dsatools",
     packages=find_packages(),
-    version="0.1.45",
+    version="0.1.46",
     description=""" The library with a most popular tools for Digital Signal Analysis (DSA)  """,
     long_description=readme,
     author="Mikhail Ronkin",
