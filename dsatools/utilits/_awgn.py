@@ -163,8 +163,10 @@ def awgn(signal, snr, units = 'db', random_state = None):
                         random_state = random_state)
 
 #---------------------------------------------------------
-def signal_like_noise(signal, snr=0,
-                      units = 'db', random_state = None):
+def signal_like_noise(signal, 
+                      snr=0,
+                      units = 'db', 
+                      random_state = None):
     '''
    Noises with the signal -like distribution
      corresponding to the target 
@@ -172,8 +174,8 @@ def signal_like_noise(signal, snr=0,
     
     Parameters
     ----------
-    * x: 1d ndarray.
-    * snr_db: float,
+    * signal: 1d ndarray.
+    * snr: float,
         signal-to-noise ratio 
         (in db of amplitudes (not power db)).
     * units: string,
@@ -205,6 +207,8 @@ def signal_like_noise(signal, snr=0,
         raise ValueError('undefined untis')
         
     signal = np.asarray(signal)
+
+    N = signal.shape[0]
     
     signal_power = np.sum(np.square(np.abs(signal))
                          )/signal.size
@@ -212,20 +216,20 @@ def signal_like_noise(signal, snr=0,
     
 
     if (signal.dtype == complex):
+
+        idxs = np.random.randint(low  = 0,
+                                 high = N,
+                                 size = 2*N)
         
-        idxs_real    = np.random.randint(0,
-                                         signal1.shape[0],
-                                         signal1.shape[0])
+        idxs_real    = idxs[:N]
         
-        idxs_complex = np.random.randint(0,
-                                         signal1.shape[0],
-                                         signal1.shape[0])
+        idxs_complex = idxs[N:]
         
         noise = np.sqrt(noise_power/2)*(signal.real[idxs_real] +  
                                         1j*signal.imag[idxs_complex])
     
     else:
-        idxs = np.random.randint(0,signal1.shape[0],signal1.shape[0])                   
+        idxs = np.random.randint(0,N,N)                   
         noise = (np.sqrt(noise_power))*signal[idxs]
     
     return noise
