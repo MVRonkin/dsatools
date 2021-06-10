@@ -44,7 +44,7 @@ def arg(x):
     x = np.asarray(x)
 
     return np.unwrap(np.angle(x))
-#-------------------------------------------------------------------
+#--------------------------------------------
 def corcof(a,b): 
     '''
     Correlation coefficient:
@@ -69,7 +69,9 @@ def corcof(a,b):
         
     a = a - np.mean(a)
     b = b - np.mean(b)
-    return np.sum(a*np.conj(b))/np.sqrt(np.sum(np.square(a))*np.sum(np.square(b)))
+    return np.sum(a*np.conj(b))/\
+           np.sqrt(np.sum(np.square(a)
+                          )*np.sum(np.square(b)))
 
 #-------------------------------------------------------------------
 cexp = lambda x: (np.exp(1j*x))
