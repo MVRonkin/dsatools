@@ -1,5 +1,5 @@
 import numpy as np
-from . _awgn import wgn_with_snr, signal_like_noise
+from . _awgn import wgn_with_snr, signal_like_noise, wgn
 
 _all__ = ['pad_to_power_of_2','pad_noises']
 #---------------------------------------    
