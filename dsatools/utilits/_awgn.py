@@ -165,7 +165,8 @@ def awgn(signal, snr, units = 'db', random_state = None):
 #---------------------------------------------------------
 def signal_like_noise(signal, 
                       snr=0,
-                      units = 'db', 
+                      length = None,
+                      units = 'db',
                       random_state = None):
     '''
    Noises with the signal -like distribution
@@ -178,6 +179,9 @@ def signal_like_noise(signal,
     * snr: float,
         signal-to-noise ratio 
         (in db of amplitudes (not power db)).
+    * length, int or None,
+        length of noise vector,
+        if None, length =  signal.size.   
     * units: string,
         units = {'linear','bd','bdw','bdm'}. 
     * random_state: float,
@@ -185,7 +189,7 @@ def signal_like_noise(signal,
     
     Returns
     --------
-    * x+noises: 1d ndarray.
+    * signal+noises: 1d ndarray.
     
     Notes
     ---------
@@ -208,32 +212,30 @@ def signal_like_noise(signal,
         
     signal = np.asarray(signal)
 
-    N = signal.shape[0]
+    if length is None:
+        length = signal.shape[0]
     
-    signal_power = np.sum(np.square(np.abs(signal))
-                         )/signal.size
+    signal_power = np.sum(np.square(np.abs(signal)))/signal.size
     noise_power  = signal_power/snr
     
 
     if (signal.dtype == complex):
-
-        idxs = np.random.randint(low  = 0,
-                                 high = N,
-                                 size = 2*N)
-        
-        idxs_real    = idxs[:N]
-        
-        idxs_complex = idxs[N:]
-        
-        noise = np.sqrt(noise_power/2)*(signal.real[idxs_real] +  
-                                        1j*signal.imag[idxs_complex])
+        noise = np.sqrt(noise_power/2)*(
+                                        np.random.choice(signal.real, 
+                                                         size=length, 
+                                                         replace=True)
+                                        +
+                                        np.random.choice(signal.imag, 
+                                                         size=length, 
+                                                         replace=True)
+                                        )
     
     else:
-        idxs = np.random.randint(0,N,N)                   
-        noise = (np.sqrt(noise_power))*signal[idxs]
+        noise = np.sqrt(noise_power)*np.random.choice(signal, 
+                                                      size=length, 
+                                                      replace=True)
     
     return noise
-
 #-------------------------------------------------------------------
 '''def awgn(signal, snr, units = 'db', random_state = None):
 

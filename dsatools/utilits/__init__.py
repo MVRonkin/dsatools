@@ -4,7 +4,7 @@ from ._awgn import (awgn,
                     wgn_with_snr,
                     signal_like_noise)
 
-from ._auxiliary import pad_to_power_of_2
+from ._auxiliary import pad_to_power_of_2,pad_noises
 
 from ._types import(fixpoint,
                     is_1d,
