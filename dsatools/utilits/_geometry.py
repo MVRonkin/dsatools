@@ -134,7 +134,7 @@ def piecewise_ols_line(vector, size = 2):
 #---------------------------
 def point_to_vector_distance(vector, p_position, p_value):
     '''
-    Calculate Point to Vector distance
+    Calculate distance between point and line beween first and last vector points
     ..math::
       dist = |(x2-x1)(y1-y0)-(x1-x0)(y2-y1)|/d,
         d =  sqrt((x2-x1)^2+(y2-y1)^2),

@@ -1,3 +1,4 @@
+'''
 import numpy as np
 
 from ._lags_matrix import conv_matrix
@@ -7,7 +8,7 @@ from ._lags_matrix import conv_matrix
 __all__=['moving_average','movav']
 
 def moving_average(vector,av_cof, mode='postw'):
-    '''
+
     Simple Moving Average or Weighted  Moving Average
     
     Parameters
@@ -32,7 +33,7 @@ def moving_average(vector,av_cof, mode='postw'):
      Returns
     -----------
     * smoothed array: 1d ndarray.          
-    '''
+
     av_cof = np.asarray(av_cof,dtype=int)
     
     if av_cof.size ==1:
@@ -45,7 +46,7 @@ def moving_average(vector,av_cof, mode='postw'):
     return conv_matrix(vector,mode=mode,lags=window.size) @ window/window.size
 #---------------------------------------------------
 def movav(vector,window_size,straight = True):
-    '''
+  
     Alternative Moving Average Implementation.
     
     Paramters
@@ -60,7 +61,7 @@ def movav(vector,window_size,straight = True):
     Return
     ----------
     smoothed vector: 1d ndarray.
-    '''
+  
     vector = np.asarray(vector)
     N = vector.shape[0]
     out = np.zeros_like(vector)

@@ -34,4 +34,6 @@ from ._geometry import (calc_line,
                         piecewise_ols_line,
                         point_to_vector_distance)
 
+
+from ._smooth import moving_average, movav
 from ..operators import *
