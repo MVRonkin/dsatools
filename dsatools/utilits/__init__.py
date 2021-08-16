@@ -1,11 +1,4 @@
-from ._awgn import (awgn,
-                    awgnDB,
-                    wgn,
-                    wgn_with_snr,
-                    signal_like_noise)
-
-from ._auxiliary import (pad_to_power_of_2,
-                         pad_noises)
+from ._awgn import awgn, awgnDB
 
 from ._types import(fixpoint,
                     is_1d,
@@ -18,22 +11,14 @@ from ._probe import probe, probe_filter
 
 from ._findpeaks import findpeaks
 
+from ..operators import *
+
 from ._barycenter import barycenter
 
-from ._math import(cexp,
-                   cexp2pi,
-                   polyval,
-                   gamma, 
-                   join_subsets, 
-                   cross_subsets,
-                   corcof)
+from ._math_auxilary import(cexp,
+                            cexp2pi,
+                            polyval,
+                            gamma, 
+                            join_subsets, 
+                            cross_subsets)
 
-from ._geometry import (calc_line,
-                        flip_vector,
-                        ols_line,
-                        piecewise_ols_line,
-                        point_to_vector_distance)
-
-
-from ._smooth import moving_average, movav
-from ..operators import *

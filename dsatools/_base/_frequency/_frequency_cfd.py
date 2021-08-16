@@ -1,5 +1,5 @@
 import numpy as np
-import scipy.signal
+import scipy
 
 from ... import operators
 
@@ -143,7 +143,7 @@ def maxcorfreq(s,fs=None, with_xcorr=True):
     s,N,fs = _check_input(s,fs)
     
     if with_xcorr:        
-        s  = operators.correlation(s,mode='straight')
+        s  = operators.correlation(s,mode='full')
         
     s1 = s[1:]
     s2 = s[:-1]

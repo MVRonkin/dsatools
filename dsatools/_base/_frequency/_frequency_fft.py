@@ -1,5 +1,5 @@
 import numpy as np
-
+import scipy
 
 __all__ = ['mlfft','barycenter_fft', 'barycenter_general_gauss_fft']
 

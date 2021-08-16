@@ -2,7 +2,7 @@ import numpy as np
 import scipy
 import matplotlib.pyplot as plt
 
-from ._math import afft
+from ._math_auxilary import afft
 
 #-------------------------------------------------------------------
 def probe(x, figsize = (12,4), title = None, save_path = None,  plt_settings = None):
