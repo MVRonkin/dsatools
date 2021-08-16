@@ -1,11 +1,14 @@
+'''
 import numpy as np
 
 from ._lags_matrix import conv_matrix
 
-__all__=['moving_average',]
+#TODO: merge both implementations
+# probably for this padded signal need to be with mean value.
+__all__=['moving_average','movav']
 
 def moving_average(vector,av_cof, mode='postw'):
-    '''
+
     Simple Moving Average or Weighted  Moving Average
     
     Parameters
@@ -30,7 +33,7 @@ def moving_average(vector,av_cof, mode='postw'):
      Returns
     -----------
     * smoothed array: 1d ndarray.          
-    '''
+
     av_cof = np.asarray(av_cof,dtype=int)
     
     if av_cof.size ==1:
@@ -41,3 +44,45 @@ def moving_average(vector,av_cof, mode='postw'):
     vector = np.asarray(vector)
     
     return conv_matrix(vector,mode=mode,lags=window.size) @ window/window.size
+#---------------------------------------------------
+def movav(vector,window_size,straight = True):
+  
+    Alternative Moving Average Implementation.
+    
+    Paramters
+    -----------------
+    vector: 1d ndarray,
+        input vector.
+    window_size: size of sliding window.
+    straight: bool,
+        if true, sliding in straight direction,
+        if false, sliding in backward direction.
+    
+    Return
+    ----------
+    smoothed vector: 1d ndarray.
+  
+    vector = np.asarray(vector)
+    N = vector.shape[0]
+    out = np.zeros_like(vector)
+    
+    if straight:
+#         if symmetry:
+        for i in range(N):
+            lp = min(N,i+window_size//2)
+            fp = max(i-window_size - window_size//2,0)
+            out[i] = np.mean(vector[fp:lp])
+#         else:
+#             for i in range(N):
+#                 lp = min(N,i+size)
+#                 out[i] = np.mean(vector[i:lp])
+    else:
+        for i in range(N-1,-1,-1):
+            fp = N-min(N-1,i+window_size//2)-1
+            lp = N-max(i-window_size - window_size//2,0)-1
+            out[N-i-1] = np.mean(vector[fp:lp])
+#         else:
+#             for i in range(N,0,-1):
+#                 lp = N-min(N,i+size)+1
+#                 out[i] = np.mean(vector[N-i+1:lp]) 
+    return out
