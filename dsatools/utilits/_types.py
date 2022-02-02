@@ -41,9 +41,6 @@ def to_1d(data):
     '''
     data = np.asarray(data)
     
-    if dtype is not None:
-        data.astype(dtype)
-    
     if np.ndim(data)==0:
         return np.asarray([data])
     elif np.ndim(data)==1:

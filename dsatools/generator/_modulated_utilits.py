@@ -305,8 +305,7 @@ def sin_phase_frequency(f0, delta_f, length, fs, phi0=0, phiN=_np.pi/4):
     tm = length/fs
     divider = _np.pi/phiN
     freqm = _np.sin(2*_np.pi*t/(tm*divider)+phi0)
-    return (f0)+delta_f*(freqm-min(freqm))
-            /(max(freqm)-min(freqm))
+    return (f0)+delta_f*(freqm-min(freqm))/(max(freqm)-min(freqm))
 
 #-------------------------------------
 def exp_decay_frequency(f0, delta_f, decay, length, fs): 
