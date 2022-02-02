@@ -16,4 +16,5 @@ from ._tls_turnication import tls_turnication
 from ._elementary import diff,arg,afft
 from ._hilbert import hilbert, hilbert_autocorrelation
 from ._hht import hht
-from ._smoothing import moving_average
+from ._instant_parameters import instant_parameters
+#from ._smoothing import moving_average, movav

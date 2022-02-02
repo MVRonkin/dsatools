@@ -2,7 +2,7 @@ import numpy as np
 import scipy
 
 
-__all__=['fixpoint','is_1d','is_complex','to_1d','to_2d','to_callback',]
+__all__=['fixpoint','is_1d','is_complex','to_1d','to_2d','to_callback','as1darray']
 #-------------------------------------------------------------------
 # def is_numbertype(x): 
 #     return isinstance(x,(float,int,list,tuple,complex,np.ndarray,np.matrix))
@@ -23,13 +23,69 @@ def is_1d(x):
 
 #-------------------------------------------------------------------
 def is_complex(x):
-    x = np.asarray(x)
-    return isinstance(x.dtype,complex.np._complex,np.complex,np.complex128,np.complex64) 
+    return isinstance(x,(complex,np.complex64,np.complex128) )
 #-------------------------------------------------------------------
-def to_1d(x):
-    x = np.asarray(x)
-    if (np.ndim(x)==0): return np.append([],x)
-    else:  return x
+def to_1d(data):
+    '''
+    Transform any data to 1d ndarray.
+
+    Parameters
+    ----------
+    data: None,float,int,ndarray
+    dtype: data type,
+
+    Returns
+    --------
+    1d ndarray
+    
+    '''
+    data = np.asarray(data)
+    
+    if dtype is not None:
+        data.astype(dtype)
+    
+    if np.ndim(data)==0:
+        return np.asarray([data])
+    elif np.ndim(data)==1:
+        return data
+    else:
+        data = np.squeeze(data)
+        if np.ndim(data)==1:
+            return data
+        else:
+            return np.ravel(data)
+
+#------------------------------------------------------------------- 
+def as1darray(data, dtype = None):
+    '''
+    Transform any data to 1d ndarray.
+
+    Parameters
+    ----------
+    data: None,float,int,ndarray
+    dtype: data type,
+
+    Returns
+    --------
+    1d ndarray
+    
+    '''
+    data = np.asarray(data)
+    
+    if dtype is not None:
+        data.astype(dtype)
+    
+    if np.ndim(data)==0:
+        return np.asarray([data])
+    elif np.ndim(data)==1:
+        return data
+    else:
+        data = np.squeeze(data)
+        if np.ndim(data)==1:
+            return data
+        else:
+            return np.ravel(data)
+    
 #-------------------------------------------------------------------    
 def to_2d(x, column=False):
     x = np.asarray(x)

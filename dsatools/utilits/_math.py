@@ -1,6 +1,6 @@
 import numpy as np
 import scipy
-_all__ = ['afft','cexp','cexp2pi','arg','polyval','gamma','corcof']
+_all__ = ['afft','cexp','cexp2pi','arg','polyval','gamma','corcof','standartize','normalize']
 
 #-------------------------------------------------------------------
 def afft(x, n_fft=None):
@@ -185,9 +185,52 @@ def cross_subsets(x, y):
     return np.min(np.vstack((x, y)),axis=0)
 #     return np.asarray([np.min([hist_x[i],hist_y[i]]) for i in np.arange(hist_x.shape[0]) ])
 
+#--------------------------------------
+def standartize(vector):
+    '''
+    Standartize vector:
+      ..math::
+      y = (x-min(x))/(max(x)-min(x))
+    
+    Parameters
+    -------------
+    vector: 1d ndarray,
+       input vector 
+    
+    Returns
+    ----------
+    vector: 1d ndarray,
+       output vector 
+        
+    '''
+    denum = np.max(vector) - np.min(vector)
+    if denum ==0:
+        return 0
+    return (vector - np.min(vector))/denum
 
-
-#-------------------------------------------------------------------
+#------------------------------
+def normalize(vector):
+    '''
+    Normalize vector:
+      ..math::
+      y = (x-mean(x))/sqrt(var(x))
+    
+    Parameters
+    -------------
+    vector: 1d ndarray,
+       input vector 
+    
+    Returns
+    ----------
+    vector: 1d ndarray,
+       output vector 
+       
+    '''   
+    stdv = np.std(vector) 
+    if stdv ==0:
+        return 0
+    return (vector - np.mean(vector))/stdv
+#--------------------------------------------------
 __P_GAMMA__ = [ 676.5203681218851
                ,-1259.1392167224028
                ,771.32342877765313
