@@ -7,3 +7,8 @@ singular-spectrum analysis (SSA); dynamic-mode decomposition (DMD);
 empirical mode decomposition; variational mode decomposition; 
 empirical wavelet transform; Hilbert vibration decomposition 
 and many others.
+
+For install use
+```
+pip install dsatool
+```
