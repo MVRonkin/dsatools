@@ -10,5 +10,5 @@ and many others.
 
 For install use
 ```
-pip install dsatool
+pip install dsatools
 ```
