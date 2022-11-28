@@ -21,6 +21,7 @@ pip install dsatools
  [research gate](https://www.researchgate.net/publication/359794540_Numerical_analysis_of_adaptive_signal_decomposition_methods_applied_for_ultrasonic_gas_flowmeters)
  
  bibtex
+ ```latex
  @inproceedings{ronkin2022numerical,
   title={Numerical analysis of adaptive signal decomposition methods applied for ultrasonic gas flowmeters},
   author={Ronkin, Mikhail V and Kalmykov, Alexey A and Polyakov, Stanislav O and Nagovicin, Viktor S},
@@ -31,3 +32,4 @@ pip install dsatools
   year={2022},
   organization={AIP Publishing LLC}
 }
+```
