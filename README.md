@@ -16,8 +16,7 @@ pip install dsatools
  
  Ronkin, Mikhail V., et al. "Numerical analysis of adaptive signal decomposition methods applied for ultrasonic gas flowmeters." AIP Conference Proceedings. Vol. 2425. No. 1. AIP Publishing LLC, 2022.
  
- [Google schoar](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Numerical+Analysis+of+Adaptive+Signal+Decomposition+Methods+Applied+for+Ultrasonic+Gas+Flowmeters&btnG=)
- 
+ [Google schoar](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Numerical+Analysis+of+Adaptive+Signal+Decomposition+Methods+Applied+for+Ultrasonic+Gas+Flowmeters&btnG=) 
  [research gate](https://www.researchgate.net/publication/359794540_Numerical_analysis_of_adaptive_signal_decomposition_methods_applied_for_ultrasonic_gas_flowmeters)
  
  bibtex
@@ -40,6 +39,7 @@ Ronkin, Mikhail, and Dima Bykhovsky. "Passive Fingerprinting of Same-Model Elect
 [Google schoar](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Passive+Fingerprinting+of+Same-Model+Electrical+Devices+by+Current+Consumption&btnG=) 
 [research gate](https://www.researchgate.net/publication/366850805_Passive_Fingerprinting_of_Same-Model_Electrical_Devices_by_Current_Consumption)
 [mdpi](https://www.mdpi.com/1424-8220/23/1/533) 
+
  bibtex
  ```latex
  @article{ronkin2023passive,
