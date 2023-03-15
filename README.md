@@ -33,3 +33,24 @@ pip install dsatools
   organization={AIP Publishing LLC}
 }
 ```
+
+Also paper on the topic of using dsatools:
+Ronkin, Mikhail, and Dima Bykhovsky. "Passive Fingerprinting of Same-Model Electrical Devices by Current Consumption." Sensors 23, no. 1 (2023): 533.
+
+[Google schoar](https://scholar.google.com/scholar?hl=en&as_sdt=0%2C5&q=Passive+Fingerprinting+of+Same-Model+Electrical+Devices+by+Current+Consumption&btnG=) 
+[research gate](https://www.researchgate.net/publication/366850805_Passive_Fingerprinting_of_Same-Model_Electrical_Devices_by_Current_Consumption)
+[mdpi](https://www.mdpi.com/1424-8220/23/1/533) 
+ bibtex
+ ```latex
+ @article{ronkin2023passive,
+  title={Passive Fingerprinting of Same-Model Electrical Devices by Current Consumption},
+  author={Ronkin, Mikhail and Bykhovsky, Dima},
+  journal={Sensors},
+  volume={23},
+  number={1},
+  pages={533},
+  year={2023},
+  publisher={MDPI}
+}
+}
+```
